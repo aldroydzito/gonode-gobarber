@@ -1,0 +1,45 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div class="content">
+    <strong>Olá, {{ user.name }}</strong>
+
+    {% if user.provider === true %}
+      {% if appointments.length > 0 %}
+      <p>Você tem clientes agendados:</p>
+      <ul class="appointments">
+        {% for appointment in appointments %}
+        <li class="appointment">
+          <img src="/files/{{ appointment.avatar }}">
+          <div class="details">
+            <h3>{{ appointment.customer }}</h3>
+            <div>
+              <i class="fas fa-clock"></i>
+              <strong>{{ appointment.date }}</strong>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Você não tem nenhum cliente agendado.</p>
+      {% endif %}
+    {% else %}
+    <p>Inicie um agendamento escolhendo um profissional abaixo:</p>
+
+    <ul class="providers">
+      {% for provider in providers %}
+        <li class="provider">
+          <div>
+            <img src="/files/{{ provider.avatar }}">
+            <strong>{{ provider.name }}</strong>
+          </div>
+          <a href="/app/appointments/new/{{ provider.id }}">+</a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <a href="/app/logout" class="logout">Sair</a>
+  </div>
+{% endblock %}
